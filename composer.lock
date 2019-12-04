@@ -3404,7 +3404,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/2a7dcf7e3e02dc5e701004e51a6f304b713107d5",
                 "reference": "2a7dcf7e3e02dc5e701004e51a6f304b713107d5",
-<<<<<<< HEAD
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3469,7 +3468,6 @@
                         "preferred": true
                     }
                 ]
-=======
                 "shasum": ""
 >>>>>>> cc57ca25b780c705e4822811f62068f6c0f75f5b
             },
@@ -3939,8 +3937,6 @@
             "time": "2017-03-05T17:38:23+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "phpdocumentor/reflection-common",
             "version": "2.0.0",
             "source": {
@@ -5145,8 +5141,6 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2019-06-13T22:48:21+00:00"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "webmozart/assert",
