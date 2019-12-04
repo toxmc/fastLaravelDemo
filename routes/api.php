@@ -24,3 +24,20 @@ Route::get('/clearTimer', "HelloController@clearTimer");
 Route::get('/reload', "HelloController@reload");
 Route::get('/info', "HelloController@info");
 Route::get('/table', "HelloController@table");
+Route::get('/task', "HelloController@task");
+Route::get('/complexTask', "HelloController@complexTask");
+
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function ($api) {
+    $api->get('users/{id}', 'App\Api\Controllers\UserController@show');
+});
+
+$api->version('v2', function ($api) {
+    $api->get('users/{id}', 'App\Api\V2\Controllers\UserController@show');
+});
+
+$api->version('v1', function ($api) {
+    $api->get('/task/{id}', function ($id) {
+        return \App\Models\Test::findOrFail($id);
+    });
+});
