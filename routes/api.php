@@ -17,6 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// 路由功能
+Route::get('/test/route', 'RouteController@get');
+Route::post('/test/route', 'RouteController@post');
+Route::put('/test/route', 'RouteController@put');
+Route::patch('/test/route', 'RouteController@patch');
+Route::delete('/test/route', 'RouteController@delete');
+Route::options('/test/route', 'RouteController@options');
+Route::match(['get', 'post'], '/test/route/match', 'RouteController@match');
+Route::any('/test/route/any', 'RouteController@any');
+Route::get('/test/route/{id}', 'RouteController@routeWhere')->where('id', '[0-9]+')->name('route_where');
+
+
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
@@ -35,7 +47,6 @@ Route::get('/info', "HelloController@info");
 Route::get('/table', "HelloController@table");
 Route::get('/task', "HelloController@task");
 Route::get('/complexTask', "HelloController@complexTask");
-
 Route::get('/request', "RequestController@info");
 
 $api = app('Dingo\Api\Routing\Router');
