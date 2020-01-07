@@ -48,6 +48,7 @@ Route::get('/table', "HelloController@table");
 Route::get('/task', "HelloController@task");
 Route::get('/complexTask', "HelloController@complexTask");
 Route::get('/request', "RequestController@info");
+Route::get('/cookie/test', "CookieController@test");
 
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {

@@ -7,9 +7,7 @@ return [
     |--------------------------------------------------------------------------
     | HTTP server configurations.
     |--------------------------------------------------------------------------
-    |
-    | @see https://www.swoole.co.uk/docs/modules/swoole-server/configuration
-    |
+    | @see https://wiki.swoole.com/wiki/page/274.html
     */
     'server'    => [
         'host'                => env('SWOOLE_HTTP_HOST', '127.0.0.1'),
@@ -18,6 +16,14 @@ return [
         // Determine if to use swoole to respond request for static files
         'handle_static_files' => env('SWOOLE_HANDLE_STATIC', true),
         'hot_reload'          => env('SWOOLE_HOT_RELOAD', false),
+        'hot_reload_type'     => env('SWOOLE_HOT_RELOAD_TYPE', ''),// inotify or tick
+        'hot_reload_paths'    => [
+            base_path('app'),
+            base_path('config'),
+        ],
+        // If the memory limit(byte) is exceeded, the service is restarted at the end of the request
+        'worker_memory_limit' => env('SWOOLE_WORKER_MEMORY_LIMIT', 200 * 1024 * 1024),
+        'task_memory_limit'   => env('SWOOLE_TASK_MEMORY_LIMIT', 200 * 1024 * 1024),
         'enable_coroutine'    => env('SWOOLE_RUNTIME_ENABLE_COROUTINE', false),
         'enable_access_log'   => env('SWOOLE_ENABLE_ACCESS_LOG', false),
         'options' => [
@@ -47,10 +53,54 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | 开启sandbox
+    |--------------------------------------------------------------------------
+    */
+    'sandbox_mode' => env('SWOOLE_SANDBOX_MODE', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | task工作空间
     |--------------------------------------------------------------------------
     */
     'task_space' => "\App\\Tasks\\",
+
+    /*
+    |--------------------------------------------------------------------------
+    | HTTP server APM tracker.
+    |--------------------------------------------------------------------------
+    | based on xhgui,tideways or tideways_xhprof.
+    | see:https://github.com/tideways/php-xhprof-extension
+    | see:https://github.com/perftools/xhgui
+    */
+    'tracker' => [
+        'enable'   => false,
+        'handler'  => 'mongodb', // only support mongodb and file
+        'filename' => function ($url) {
+            $time = microtime(true);
+            $url = substr(md5($url), 0, 6);
+            return storage_path("tracker/xhgui.data.{$time}_{$url}");
+        },
+
+        'db' => [
+            'host'    => 'mongodb://localhost:27017/xhprof',
+            'db'      => 'xhprof',
+            'options' => [],
+        ],
+
+        // Profile 1 in 100 requests. You can return true to profile every request.
+        'profiler' => [
+            'enable'      => function ($illuminateRequest) {
+                return (bool) $illuminateRequest->cookie('enable_apm'); //rand(1, 100) === 42;
+            },
+            'simple_url'  => function ($url) {
+                return preg_replace('/\=\d+/', '', $url);
+            },
+            'filter_path' => [
+                '/api/test'
+            ]
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -76,6 +126,32 @@ return [
     */
     'websocket' => [
         'enabled' => env('SWOOLE_HTTP_WEBSOCKET', false),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | User-defined processes
+    | eg:  \App\Service\UserProcesses::class => 'processName'
+    |--------------------------------------------------------------------------
+    */
+    'processes' => [
+        App\Tasks\UserProcess::class => 'user',
+        FastLaravel\Http\Process\Crond::class => 'crond',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | User-defined crontab jobs
+    | 规则：秒 分 时 日 月 周
+    |--------------------------------------------------------------------------
+    */
+    'crontab' => [
+        [
+            // 任务说明信息
+            'class'  => App\Tasks\Crontab::class,
+            'method' => 'execute',
+            'cron'   => '* * * * * *',
+        ],
     ],
 
     /*

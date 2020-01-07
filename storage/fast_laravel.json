@@ -11,6 +11,13 @@
       "public_path": "/c/Users/MeetYou/code/fastLaravelDemo/public" ,
       "handle_static_files": true ,
       "hot_reload": true ,
+      "hot_reload_type": "" ,
+      "hot_reload_paths": [
+        "/c/Users/MeetYou/code/fastLaravelDemo/app" ,
+        "/c/Users/MeetYou/code/fastLaravelDemo/config"
+      ] ,
+      "worker_memory_limit": 209715200 ,
+      "task_memory_limit": 209715200 ,
       "enable_coroutine": false ,
       "enable_access_log": false ,
       "options": {
@@ -30,8 +37,25 @@
         "ssl_key_file": null
       }
     } ,
-    "sandbox_mode": true ,
+    "sandbox_mode": false ,
     "task_space": "\\App\\Tasks\\" ,
+    "tracker": {
+      "enable": false ,
+      "handler": "mongodb" ,
+      "filename": {} ,
+      "db": {
+        "host": "mongodb://localhost:27017/xhprof" ,
+        "db": "xhprof" ,
+        "options": [ ]
+      } ,
+      "profiler": {
+        "enable": {} ,
+        "simple_url": {} ,
+        "filter_path": [
+          "/api/test"
+        ]
+      }
+    } ,
     "pool": {
       "default": {
         "name": "mysql" ,
@@ -46,6 +70,17 @@
     "websocket": {
       "enabled": false
     } ,
+    "processes": {
+      "App\\Tasks\\UserProcess": "user" ,
+      "FastLaravel\\Http\\Process\\Crond": "crond"
+    } ,
+    "crontab": [
+      {
+        "class": "App\\Tasks\\Crontab" ,
+        "method": "execute" ,
+        "cron": "* * * * * *"
+      }
+    ] ,
     "ob_output": true ,
     "instances": [ ] ,
     "providers": [
@@ -64,15 +99,15 @@
       "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games" ,
       "MAIL": "/var/mail/root" ,
       "SHELL": "/bin/zsh" ,
-      "SSH_CLIENT": "192.168.45.230 51580 2222" ,
-      "SSH_CONNECTION": "192.168.45.230 51580 192.168.45.230 2222" ,
-      "SSH_TTY": "/dev/pts/9" ,
+      "SSH_CLIENT": "192.168.45.230 61362 2222" ,
+      "SSH_CONNECTION": "192.168.45.230 61362 192.168.45.230 2222" ,
+      "SSH_TTY": "/dev/pts/12" ,
       "TERM": "xterm" ,
       "LANG": "en_US.UTF-8" ,
       "LANGUAGE": "en_US:en" ,
       "SHLVL": "1" ,
       "PWD": "/root/code/fastLaravelDemo" ,
-      "OLDPWD": "/root" ,
+      "OLDPWD": "/root/code" ,
       "ZSH": "/root/.oh-my-zsh" ,
       "PAGER": "less" ,
       "LESS": "-R" ,
@@ -85,8 +120,8 @@
       "SCRIPT_FILENAME": "artisan" ,
       "PATH_TRANSLATED": "artisan" ,
       "DOCUMENT_ROOT": "" ,
-      "REQUEST_TIME_FLOAT": 1576142384.182177 ,
-      "REQUEST_TIME": 1576142384 ,
+      "REQUEST_TIME_FLOAT": 1578387392.400264 ,
+      "REQUEST_TIME": 1578387392 ,
       "argv": [
         "artisan" ,
         "http" ,
@@ -117,14 +152,14 @@
       "DB_PASSWORD": "admin123" ,
       "BROADCAST_DRIVER": "log" ,
       "CACHE_DRIVER": "file" ,
-      "SESSION_DRIVER": "file" ,
+      "SESSION_DRIVER": "redis" ,
+      "SESSION_CONNECTION": "session" ,
       "QUEUE_DRIVER": "sync" ,
       "REDIS_HOST": "127.0.0.1" ,
       "REDIS_PASSWORD": "admin123" ,
       "REDIS_PORT": "6379" ,
       "REDIS_DB": "5" ,
       "REDIS_CACHE_DB": "6" ,
-      "SESSION_CONNECTION": "session" ,
       "MAIL_DRIVER": "smtp" ,
       "MAIL_HOST": "smtp.mailtrap.io" ,
       "MAIL_PORT": "2525" ,
@@ -167,14 +202,14 @@
       "DB_PASSWORD": "admin123" ,
       "BROADCAST_DRIVER": "log" ,
       "CACHE_DRIVER": "file" ,
-      "SESSION_DRIVER": "file" ,
+      "SESSION_DRIVER": "redis" ,
+      "SESSION_CONNECTION": "session" ,
       "QUEUE_DRIVER": "sync" ,
       "REDIS_HOST": "127.0.0.1" ,
       "REDIS_PASSWORD": "admin123" ,
       "REDIS_PORT": "6379" ,
       "REDIS_DB": "5" ,
       "REDIS_CACHE_DB": "6" ,
-      "SESSION_CONNECTION": "session" ,
       "MAIL_DRIVER": "smtp" ,
       "MAIL_HOST": "smtp.mailtrap.io" ,
       "MAIL_PORT": "2525" ,
