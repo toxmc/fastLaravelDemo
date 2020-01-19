@@ -14,14 +14,18 @@ class UserProcess extends BaseProcess{
         Application::make('laravel', base_path());
 
         while(true) {
-            $id = rand(1, 100);
-            $user = \App\Models\Test::query()->where('id', $id)->first();
-            if (!$user) {
-                throw new \Exception("用户不存在");
+            try {
+                $id = rand(1, 100);
+                $user = \App\Models\Test::query()->where('id', $id)->first();
+                if (!$user) {
+                    throw new \Exception("用户不存在");
+                }
+                var_dump($user->toArray());
+                sleep(2);
+                Show::info('sleep 2s');
+            } catch (\Exception $e) {
+                Show::error($e->getMessage());
             }
-            var_dump($user->toArray());
-            sleep(2);
-            Show::info('sleep 2s');
         }
     }
 }

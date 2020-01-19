@@ -107,12 +107,12 @@ class HelloController extends Controller
         $result['deliver_async'] = Task::deliver(Users::class, 'getUserById', ['1319'], Task::TYPE_ASYNC);
 
         $tasks = [
-            [
+            'test' => [
                 'name'   => Users::class,
                 'method' => 'getUserById',
                 'params' => ['1319'],
             ],
-            [
+            'test1' => [
                 'name'   => Users::class,
                 'method' => 'getUserById',
                 'params' => ['1319'],

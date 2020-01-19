@@ -53,6 +53,11 @@ Route::get('/cookie/test', "CookieController@test");
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->get('users/{id}', 'App\Api\Controllers\UserController@show');
+    $api->post('users/{id}', 'App\Api\Controllers\UserController@post');
+//    如果put和delete请求的路由设置的和get请求一样的话就会报 405 Method Not Allowed 错误。
+//    $api->put('users/{id}', 'App\Api\Controllers\UserController@put');
+    $api->put('user/{id}', 'App\Api\Controllers\UserController@put');
+    $api->delete('user/{id}', 'App\Api\Controllers\UserController@delete');
 });
 
 $api->version('v2', function ($api) {
